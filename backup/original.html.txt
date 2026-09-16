@@ -1,0 +1,728 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SRC ROTA e COMBUSTIVEL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+    <div class="header">
+        <h1>SRC ROTA e COMBUSTIVE</h1>
+        <span>PAINEL DE CONTROLE - LOCALIZADOR DE POSTOS & GESTÃO DE COMBUSTÍVEL</span>
+    </div>
+
+    <div class="section-box">
+        <h3>⚙️ Parâmetros do Veículo</h3>
+        <div class="inputs-grid">
+            <div class="input-group">
+                <label>Tanque 1 Principal (L)</label>
+                <input type="number" id="inpCapacidade1" value="280" min="0" step="1" oninput="calcular()">
+            </div>
+            <div class="input-group">
+                <label>Tanque 2 Extra (L)</label>
+                <input type="number" id="inpCapacidade2" value="280" min="0" step="1" oninput="calcular()">
+            </div>
+            <div class="input-group">
+                <label>Nível no Painel</label>
+                <select id="inpNivel" onchange="calcular()">
+                    <option value="0.10">Reserva (10%)</option>
+                    <option value="0.25">1/4 (25%)</option>
+                    <option value="0.50">1/2 (50%)</option>
+                    <option value="0.75">3/4 (75%)</option>
+                    <option value="1.00" selected>Cheio (100%)</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Carga</label>
+                <select id="inpCarga" onchange="calcular()">
+                    <option value="CARREGADO" selected>CARREGADO</option>
+                    <option value="PARCIAL">PARCIAL</option>
+                    <option value="VAZIO">VAZIO</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Consumo (km/L)</label>
+                <input type="number" id="inpConsumo" value="2.5" step="0.1" min="0.1" readonly style="opacity: 0.6;">
+            </div>
+            <div class="input-group">
+                <label>Margem de segurança</label>
+                <select id="inpMargem" onchange="calcular()">
+                    <option value="0.10">10%</option>
+                    <option value="0.15" selected>15%</option>
+                    <option value="0.20">20%</option>
+                    <option value="0.25">25%</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <h3>🛢️ Medidor Visual de Combustível</h3>
+        <div class="gauge-wrap" id="gaugeContainer"></div>
+        <div class="gauge-readout" id="gaugeReadout" style="text-align:center; margin-top:10px; font-size:13px; color:#94a3b8;"></div>
+    </div>
+
+    <div class="section-box section-purple">
+        <h3>📍 Localização e busca de postos</h3>
+        <div class="inputs-grid">
+            <div class="input-group" style="grid-column:1 / -1;">
+                <label>Onde o veículo está agora?</label>
+                <input type="text" id="inpOrigem"
+                       placeholder="Ex.: Av. Juscelino Kubitschek, Contagem, MG ou apenas Contagem">
+                <small style="display:block;color:#94a3b8;margin-top:5px;">
+                    Endereço = localização aproximada pelo mapa. Cidade = estimativa; GPS é mais preciso.
+                </small>
+            </div>
+        </div>
+        <button class="btn-calc" id="btnBuscarCidade" onclick="buscarPostos()" style="margin-top:15px;">
+            🔎 Localizar Postos
+        </button>
+        <button class="btn-gps" id="btnGPS" onclick="buscarGPS()">
+            📡 Usar Minha Localização Atual (GPS)
+        </button>
+        <div id="statusBusca" style="margin-top:10px;color:#94a3b8;font-size:12px;"></div>
+    </div>
+
+    <div class="section-box" id="resultadosPostos" style="display:none;"></div>
+
+    <div class="results-grid">
+        <div class="info-card">
+            <div class="info-item">
+                <label>Capacidade Total</label>
+                <div class="value" id="outCapacidadeTotal">0.0 L</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Litros no Momento</label>
+                <div class="value" id="outLitros">0.0 L</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Autonomia Máxima</label>
+                <div class="value" id="outAutonomia">0.0 km</div>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="info-item">
+                <label>Autonomia Segura</label>
+                <div class="value" id="outAutonomiaSegura">0.0 km</div>
+            </div>
+        </div>
+
+        <div class="status-alert status-success" id="outStatusPosto" style="grid-column:1 / -1;">
+            🟢 TANQUE CHEIO - SEM ALERTAS NO MOMENTO
+        </div>
+    </div>
+</div>
+
+<script>
+/*
+ * OBSERVAÇÃO IMPORTANTE:
+ * 1) GPS usa a posição real do navegador.
+ * 2) Endereço/cidade é geocodificado pelo OpenStreetMap/Nominatim.
+ * 3) A distância de rota é tentada pelo OSRM (rota rodoviária).
+ * 4) Se o serviço de rota falhar, o sistema usa uma estimativa Haversine x 1,30,
+ *    claramente identificada como ESTIMATIVA.
+ * 5) O OSRM público não é uma garantia de rota para veículos pesados.
+ *    Para produção/frota, recomenda-se um provedor de rotas com suporte a caminhões.
+ */
+
+const postos = [
+    {"Nome":"Caxuxa I","Endereço":"BR-262, km 523","Cidade":"Luz","Estado":"MG","lat":-19.7997,"lon":-45.6856},
+    {"Nome":"Caxuxa III (Dorjó)","Endereço":"BR-262, km 526","Cidade":"Luz","Estado":"MG","lat":-19.8015,"lon":-45.6890},
+    {"Nome":"Caxuxa Rodão","Endereço":"BR-262, km 482","Cidade":"Bom Despacho","Estado":"MG","lat":-19.7358,"lon":-45.2519},
+    {"Nome":"Caxuxa Lombada","Endereço":"BR-262, km 478,5","Cidade":"Bom Despacho","Estado":"MG","lat":-19.7310,"lon":-45.2490},
+    {"Nome":"Caxuxa São João","Endereço":"Av. Lima Guimarães, 80","Cidade":"Pitangui","Estado":"MG","lat":-19.6732,"lon":-44.8988},
+    {"Nome":"Caxuxa Biquinhas","Endereço":"Rua Pref. Airton Xavier, 432","Cidade":"Biquinhas","Estado":"MG","lat":-19.0118,"lon":-45.7483},
+    {"Nome":"Caxuxa Barril","Endereço":"BR-262, km 511","Cidade":"Luz","Estado":"MG","lat":-19.7950,"lon":-45.6800},
+    {"Nome":"Caxuxa Milênio","Endereço":"Av. Laura Andrade, 190","Cidade":"Arcos","Estado":"MG","lat":-20.2792,"lon":-45.5392},
+    {"Nome":"Caxuxa Lava-Pés","Endereço":"Rua Alzira Torres, 547","Cidade":"Bambuí","Estado":"MG","lat":-20.0071,"lon":-45.9772},
+    {"Nome":"Caxuxa Girassol","Endereço":"Rua Indalécio Alvares Gonzales, 1755","Cidade":"Bambuí","Estado":"MG","lat":-20.0150,"lon":-45.9800},
+    {"Nome":"Caxuxa Juá","Endereço":"BR-354, km 471","Cidade":"Arcos","Estado":"MG","lat":-20.2850,"lon":-45.5450},
+    {"Nome":"Caxuxa Veredas","Endereço":"BR-365, km 323","Cidade":"João Pinheiro","Estado":"MG","lat":-17.7450,"lon":-46.1750},
+    {"Nome":"Caxuxa JK","Endereço":"BR-040, km 226","Cidade":"São Gonçalo do Abaeté","Estado":"MG","lat":-18.3350,"lon":-45.8250},
+    {"Nome":"Caxuxa Monte Líbano","Endereço":"BR-262, km 526","Cidade":"Luz","Estado":"MG","lat":-19.8050,"lon":-45.6950},
+    {"Nome":"Caxuxa Lagoense","Endereço":"MG-170, km 28","Cidade":"Lagoa da Prata","Estado":"MG","lat":-20.0250,"lon":-45.5450},
+    {"Nome":"Caxuxa Moinho 1","Endereço":"BR-381, km 802 (Sul)","Cidade":"São Gonçalo do Sapucaí","Estado":"MG","lat":-21.8950,"lon":-45.5950},
+    {"Nome":"Caxuxa Moinho 2","Endereço":"BR-381, km 802 (Norte)","Cidade":"São Gonçalo do Sapucaí","Estado":"MG","lat":-21.8960,"lon":-45.5940},
+    {"Nome":"Caxuxa Curvelo","Endereço":"BR-135, km 615","Cidade":"Curvelo","Estado":"MG","lat":-18.7550,"lon":-44.4550},
+    {"Nome":"Caxuxa Natal","Endereço":"BR-262, km 497","Cidade":"Moema","Estado":"MG","lat":-19.8250,"lon":-45.4050},
+    {"Nome":"Caxuxa Profetas","Endereço":"BR-040, km 614,6","Cidade":"Congonhas","Estado":"MG","lat":-20.5050,"lon":-43.8550},
+    {"Nome":"Caxuxa Estrela","Endereço":"Av. Francisco Campos, 5","Cidade":"Estrela do Indaiá","Estado":"MG","lat":-19.5250,"lon":-45.7050},
+    {"Nome":"Caxuxa 2000","Endereço":"Rua Paralela, s/n","Cidade":"Japaraíba","Estado":"MG","lat":-19.8050,"lon":-45.5050},
+    {"Nome":"POSTO 100 TEOFILO OTONI","Endereço":"Avenida Sidônio Otoni, 683","Cidade":"Teófilo Otoni","Estado":"MG","lat":-17.8550,"lon":-41.5050},
+    {"Nome":"POSTO 601 BARBACENA","Endereço":"Rua Benjamin Constant, 200","Cidade":"Barbacena","Estado":"MG","lat":-21.2250,"lon":-43.7750},
+    {"Nome":"POSTO 603 UBÁ","Endereço":"Rua Frei Cornélio, 14","Cidade":"Ubá","Estado":"MG","lat":-21.1250,"lon":-42.9450},
+    {"Nome":"POSTO 605 JANUARIA","Endereço":"Avenida Marechal Deodoro","Cidade":"Januária","Estado":"MG","lat":-15.4850,"lon":-44.3650},
+    {"Nome":"POSTO 606 UBERABA","Endereço":"Rua Coronel Cacildo Arantes","Cidade":"Uberaba","Estado":"MG","lat":-19.7450,"lon":-47.9350},
+    {"Nome":"POSTO 607 UBERLANDIA","Endereço":"Avenida João Leão, 7085","Cidade":"Uberlândia","Estado":"MG","lat":-18.9150,"lon":-48.2750},
+    {"Nome":"POSTO 609 CORINTO","Endereço":"Avenida Amarante Ribeiro","Cidade":"Corinto","Estado":"MG","lat":-18.3650,"lon":-44.4550},
+    {"Nome":"POSTO 612 SETE LAGOAS","Endereço":"Avenida Tunico Reis, 122","Cidade":"Sete Lagoas","Estado":"MG","lat":-19.4650,"lon":-44.2450},
+    {"Nome":"POSTO 616 MONTES CLAROS","Endereço":"Avenida Donato Quintino, 08","Cidade":"Montes Claros","Estado":"MG","lat":-16.7350,"lon":-43.8650},
+    {"Nome":"POSTO 617 J F - SÃO MATEUS","Endereço":"Ladeira Alexandre Leonel, 200","Cidade":"Juiz de Fora","Estado":"MG","lat":-21.7750,"lon":-43.3550},
+    {"Nome":"POSTO 618 J F - MARIANO PR","Endereço":"Avenida Brasil, 6123","Cidade":"Juiz de Fora","Estado":"MG","lat":-21.7550,"lon":-43.3450},
+    {"Nome":"POSTO 619 JANAUBA","Endereço":"Rua São Pedro, 650","Cidade":"Janaúba","Estado":"MG","lat":-15.8050,"lon":-43.3050},
+    {"Nome":"POSTO 620 IPATINGA","Endereço":"Avenida Alberto Giovannini, 165","Cidade":"Ipatinga","Estado":"MG","lat":-19.4950,"lon":-42.5350},
+    {"Nome":"POSTO 621 PADRE EUSTAQUIO","Endereço":"Rua Pará de Minas, 788","Cidade":"Belo Horizonte","Estado":"MG","lat":-19.9150,"lon":-43.9850},
+    {"Nome":"POSTO 622 CORONEL FABRICIANO","Endereço":"Praça Sérvulo Roque, 86","Cidade":"Coronel Fabriciano","Estado":"MG","lat":-19.5250,"lon":-42.6250},
+    {"Nome":"POSTO 623 CINQUENTENARIO","Endereço":"Rua Úrsula Paulino, 763","Cidade":"Belo Horizonte","Estado":"MG","lat":-19.9750,"lon":-43.9850},
+    {"Nome":"POSTO 624 TAIOBEIRAS","Endereço":"Avenida Bandeirantes, 650","Cidade":"Taiobeiras","Estado":"MG","lat":-15.8050,"lon":-42.2350},
+    {"Nome":"Posto Dharma","Endereço":"Avenida Bandeirantes, 650","Cidade":"Três Corações","Estado":"MG","lat":-21.6950,"lon":-45.2550},
+    {"Nome":"Posto Contorno","Endereço":"Avenida Prefeito Orlando Rezende Andrade, 841","Cidade":"Três Corações","Estado":"MG","lat":-21.7050,"lon":-45.2650},
+    {"Nome":"Posto São Thomé VI","Endereço":"Avenida Deputado Renato Azeredo, 3959","Cidade":"Três Corações","Estado":"MG","lat":-21.6850,"lon":-45.2450},
+    {"Nome":"Posto Pereira e Maciel","Endereço":"Avenida Manuel Vida, 800","Cidade":"Varginha","Estado":"MG","lat":-21.5550,"lon":-45.4350},
+    {"Nome":"POSTO REDE BRASIL","Endereço":"Rodovia BR-101 Norte, 3616","Cidade":"Serra","Estado":"ES","lat":-20.1250,"lon":-40.3050},
+    {"Nome":"POSTO SAO JOAO DEL REI","Endereço":"Avenida Leite de Castro, 261","Cidade":"São João del Rei","Estado":"MG","lat":-21.1350,"lon":-44.2550},
+    {"Nome":"POSTO SERRA","Endereço":"Rodovia BR 101 Norte, 3616","Cidade":"Serra","Estado":"ES","lat":-20.1260,"lon":-40.3060},
+    {"Nome":"POSTO SJDR II/SHARK","Endereço":"Avenida Sete de Setembro, 10","Cidade":"São João del Rei","Estado":"MG","lat":-21.1360,"lon":-44.2560},
+    {"Nome":"Posto Dom Pedro Betim","Endereço":"BR-381, Betim - MG","Cidade":"Betim","Estado":"MG","lat":-19.9670,"lon":-44.2010},
+    {"Nome":"Posto Dom Pedro Contagem Fernão Dias","Endereço":"BR-381, Contagem - MG","Cidade":"Contagem","Estado":"MG","lat":-19.9360,"lon":-44.0530}
+];
+
+let localizacaoAtual = null;
+let origemDescricao = "";
+let origemFoiGPS = false;
+
+const CONSUMOS = {
+    VAZIO: 3.0,
+    PARCIAL: 2.5,
+    CARREGADO: 2.0
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    criarMedidor();
+    calcular();
+
+    const input = document.getElementById("inpOrigem");
+    input.addEventListener("keypress", e => {
+        if (e.key === "Enter") buscarPostos();
+    });
+
+    validarCadastroPostos();
+});
+
+function normalizarTexto(texto) {
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+}
+
+function criarMedidor() {
+    const container = document.getElementById("gaugeContainer");
+    if (!container) return;
+
+    container.innerHTML = `
+    <svg id="gaugeSvg" viewBox="0 0 240 180"
+         xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;height:100%;max-width:320px;margin:0 auto;display:block;">
+        <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#1b1c27;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#0e0f16;stop-opacity:1"/>
+            </linearGradient>
+        </defs>
+
+        <circle cx="120" cy="140" r="100" fill="url(#gaugeGrad)" stroke="#272838" stroke-width="1"/>
+        <path d="M 40 140 A 80 80 0 0 1 200 140"
+              fill="none" stroke="#0e0f16" stroke-width="14" stroke-linecap="round"/>
+        <path id="gaugeArc" d="M 40 140 A 80 80 0 0 1 200 140"
+              fill="none" stroke="#10b981" stroke-width="14"
+              stroke-dasharray="251.3 251.3" stroke-dashoffset="0"
+              style="transition:stroke-dashoffset .4s ease,stroke .3s ease"/>
+        <text x="40" y="155" font-size="10" fill="#64748b" text-anchor="middle">0%</text>
+        <text x="120" y="65" font-size="10" fill="#64748b" text-anchor="middle">50%</text>
+        <text x="200" y="155" font-size="10" fill="#64748b" text-anchor="middle">100%</text>
+
+        <g id="gaugeNeedleGroup"
+           style="transform-origin:120px 140px;transition:transform .4s ease">
+            <line x1="120" y1="140" x2="120" y2="50"
+                  stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="120" cy="140" r="7" fill="#38bdf8" stroke="#ffffff" stroke-width="2"/>
+        </g>
+
+        <circle cx="120" cy="140" r="10" fill="#0e0f16" stroke="#38bdf8" stroke-width="2"/>
+        <text id="gaugePercent" x="120" y="25"
+              text-anchor="middle" font-size="26" font-weight="bold"
+              fill="#38bdf8">100%</text>
+    </svg>`;
+}
+
+function atualizarMedidor(percentual, combustivelAtual, capacidadeTotal) {
+    percentual = Math.max(0, Math.min(1, percentual));
+
+    const arc = document.getElementById("gaugeArc");
+    if (arc) {
+        const circunferencia = 251.3;
+        arc.style.strokeDashoffset = circunferencia * (1 - percentual);
+        arc.setAttribute(
+            "stroke",
+            percentual >= 0.5 ? "#10b981" :
+            percentual >= 0.25 ? "#f59e0b" : "#ef4444"
+        );
+    }
+
+    const needle = document.getElementById("gaugeNeedleGroup");
+    if (needle) {
+        // 0% = -90° (esquerda), 50% = 0° (cima), 100% = +90° (direita)
+        needle.style.transform = `rotate(${-90 + percentual * 180}deg)`;
+    }
+
+    const percentText = document.getElementById("gaugePercent");
+    if (percentText) percentText.textContent = `${Math.round(percentual * 100)}%`;
+
+    const readout = document.getElementById("gaugeReadout");
+    if (readout) {
+        readout.innerHTML =
+            `Nível: <strong style="color:#38bdf8">${combustivelAtual.toFixed(1)} L</strong> / ${capacidadeTotal.toFixed(0)} L`;
+    }
+}
+
+function obterNumero(id) {
+    const valor = Number.parseFloat(document.getElementById(id)?.value);
+    return Number.isFinite(valor) && valor >= 0 ? valor : 0;
+}
+
+function calcular() {
+    const cap1 = obterNumero("inpCapacidade1");
+    const cap2 = obterNumero("inpCapacidade2");
+    const nivel = Math.max(0, Math.min(1, Number.parseFloat(document.getElementById("inpNivel")?.value) || 0));
+    const carga = document.getElementById("inpCarga")?.value || "CARREGADO";
+    const margem = Math.max(0, Math.min(0.9, Number.parseFloat(document.getElementById("inpMargem")?.value) || 0.15));
+
+    const capacidadeTotal = cap1 + cap2;
+    const combustivelAtual = capacidadeTotal * nivel;
+    const consumo = CONSUMOS[carga] ?? CONSUMOS.CARREGADO;
+    const autonomia = combustivelAtual * consumo;
+    const autonomiaSegura = autonomia * (1 - margem);
+
+    document.getElementById("outCapacidadeTotal").textContent = `${capacidadeTotal.toFixed(1)} L`;
+    document.getElementById("outLitros").textContent = `${combustivelAtual.toFixed(1)} L`;
+    document.getElementById("inpConsumo").value = consumo.toFixed(1);
+    document.getElementById("outAutonomia").textContent = `${autonomia.toFixed(1)} km`;
+    document.getElementById("outAutonomiaSegura").textContent = `${autonomiaSegura.toFixed(1)} km`;
+
+    const status = document.getElementById("outStatusPosto");
+    if (capacidadeTotal <= 0) {
+        status.className = "status-alert status-danger";
+        status.textContent = "🚨 CAPACIDADE DOS TANQUES INVÁLIDA";
+    } else if (combustivelAtual <= capacidadeTotal * 0.15) {
+        status.className = "status-alert status-danger";
+        status.textContent = "🚨 RESERVA CRÍTICA - ABASTEÇA IMEDIATAMENTE!";
+    } else if (combustivelAtual <= capacidadeTotal * 0.30) {
+        status.className = "status-alert status-warning";
+        status.textContent = "⚠️ ATENÇÃO: NÍVEL EM RESERVA - PROCURE UM POSTO";
+    } else {
+        status.className = "status-alert status-success";
+        status.textContent = "🟢 NÍVEL DE COMBUSTÍVEL NORMAL";
+    }
+
+    atualizarMedidor(nivel, combustivelAtual, capacidadeTotal);
+}
+
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+
+    const a =
+        Math.sin(dLat / 2) ** 2 +
+        Math.cos(lat1 * Math.PI / 180) *
+        Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+
+function distanciaEstimadaRodoviaria(local, posto) {
+    return calcularDistancia(local.lat, local.lon, posto.lat, posto.lon) * 1.30;
+}
+
+function setStatusBusca(texto) {
+    const el = document.getElementById("statusBusca");
+    if (el) el.textContent = texto;
+}
+
+function buscarGPS() {
+    if (!navigator.geolocation) {
+        alert("❌ GPS não disponível neste navegador.");
+        return;
+    }
+
+    const btn = document.getElementById("btnGPS");
+    btn.disabled = true;
+    btn.textContent = "🔄 Obtendo localização...";
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            localizacaoAtual = {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude
+            };
+
+            origemDescricao = `GPS (${localizacaoAtual.lat.toFixed(5)}, ${localizacaoAtual.lon.toFixed(5)})`;
+            origemFoiGPS = true;
+
+            setStatusBusca("📡 GPS obtido. Calculando rotas para os postos...");
+            buscarPostosMaisProximos(localizacaoAtual).finally(() => {
+                btn.disabled = false;
+                btn.textContent = "📡 Usar Minha Localização Atual (GPS)";
+            });
+        },
+        error => {
+            const mensagens = {
+                1: "Permissão de localização negada.",
+                2: "Localização indisponível.",
+                3: "Tempo esgotado para obter a localização."
+            };
+
+            alert(`❌ ${mensagens[error.code] || error.message}`);
+            btn.disabled = false;
+            btn.textContent = "📡 Usar Minha Localização Atual (GPS)";
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 30000
+        }
+    );
+}
+
+async function buscarPostos() {
+    const texto = document.getElementById("inpOrigem")?.value.trim() || "";
+
+    if (!texto) {
+        alert("⚠️ Digite um endereço ou cidade.");
+        return;
+    }
+
+    const btn = document.getElementById("btnBuscarCidade");
+    btn.disabled = true;
+    btn.textContent = "🔄 Localizando...";
+
+    try {
+        setStatusBusca("🌐 Procurando a localização no mapa...");
+
+        const local = await geocodificarOrigem(texto);
+
+        localizacaoAtual = local.coordenadas;
+        origemDescricao = local.nome;
+        origemFoiGPS = false;
+
+        await buscarPostosMaisProximos(localizacaoAtual);
+    } catch (erro) {
+        alert(`❌ ${erro.message}`);
+        setStatusBusca("");
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "🔎 Localizar Postos";
+    }
+}
+
+async function geocodificarOrigem(texto) {
+    /*
+     * Nominatim é usado aqui apenas para transformar endereço/cidade em coordenadas.
+     * Para uso corporativo de alto volume, troque por um serviço de geocodificação
+     * próprio/profissional.
+     */
+    const url =
+        "https://nominatim.openstreetmap.org/search" +
+        `?format=jsonv2&limit=1&countrycodes=br&q=${encodeURIComponent(texto)}`;
+
+    const resposta = await fetch(url, {
+        headers: { "Accept": "application/json" }
+    });
+
+    if (!resposta.ok) {
+        throw new Error("Não foi possível consultar o serviço de mapas.");
+    }
+
+    const dados = await resposta.json();
+
+    if (!dados.length) {
+        throw new Error("Endereço/cidade não encontrado. Tente informar também MG ou ES.");
+    }
+
+    const lat = Number(dados[0].lat);
+    const lon = Number(dados[0].lon);
+
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) {
+        throw new Error("O mapa retornou coordenadas inválidas.");
+    }
+
+    return {
+        coordenadas: { lat, lon },
+        nome: dados[0].display_name || texto
+    };
+}
+
+async function buscarPostosMaisProximos(local) {
+    if (!local || !Number.isFinite(local.lat) || !Number.isFinite(local.lon)) {
+        throw new Error("Localização inválida.");
+    }
+
+    /*
+     * Primeiro filtramos por distância geográfica para reduzir chamadas.
+     * Depois tentamos obter distância de rota para os candidatos.
+     */
+    const candidatos = postos
+        .filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon))
+        .map(p => ({
+            ...p,
+            distanciaGeografica: calcularDistancia(local.lat, local.lon, p.lat, p.lon)
+        }))
+        .sort((a, b) => a.distanciaGeografica - b.distanciaGeografica)
+        .slice(0, 10);
+
+    setStatusBusca("🗺️ Calculando distância rodoviária dos postos mais próximos...");
+
+    const resultados = await Promise.all(
+        candidatos.map(async posto => {
+            try {
+                const rota = await obterRotaOSRM(local, posto);
+                return {
+                    ...posto,
+                    distancia: rota.distanciaKm,
+                    tempoMin: rota.tempoMin,
+                    tipoDistancia: "ROTA"
+                };
+            } catch {
+                return {
+                    ...posto,
+                    distancia: distanciaEstimadaRodoviaria(local, posto),
+                    tempoMin: null,
+                    tipoDistancia: "ESTIMADA"
+                };
+            }
+        })
+    );
+
+    resultados.sort((a, b) => a.distancia - b.distancia);
+
+    exibirResultadosPostos(resultados.slice(0, 5), local);
+    setStatusBusca(
+        `📍 Origem: ${origemDescricao}` +
+        (origemFoiGPS ? " • GPS" : " • endereço/cidade geocodificado")
+    );
+}
+
+async function obterRotaOSRM(local, posto) {
+    const url =
+        `https://router.project-osrm.org/route/v1/driving/` +
+        `${local.lon},${local.lat};${posto.lon},${posto.lat}` +
+        `?overview=false&steps=false`;
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
+    try {
+        const resposta = await fetch(url, { signal: controller.signal });
+
+        if (!resposta.ok) throw new Error("Falha no roteador.");
+
+        const dados = await resposta.json();
+
+        if (dados.code !== "Ok" || !dados.routes?.length) {
+            throw new Error("Rota não encontrada.");
+        }
+
+        return {
+            distanciaKm: dados.routes[0].distance / 1000,
+            tempoMin: dados.routes[0].duration / 60
+        };
+    } finally {
+        clearTimeout(timeout);
+    }
+}
+
+function escaparHTML(valor) {
+    return String(valor ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function formatarTempo(minutos) {
+    if (!Number.isFinite(minutos)) return "";
+    const h = Math.floor(minutos / 60);
+    const m = Math.round(minutos % 60);
+    return h > 0 ? `${h}h ${m}min` : `${m} min`;
+}
+
+function analisarAutonomia(distanciaKm) {
+    const capacidade = obterNumero("inpCapacidade1") + obterNumero("inpCapacidade2");
+    const nivel = Number.parseFloat(document.getElementById("inpNivel")?.value) || 0;
+    const carga = document.getElementById("inpCarga")?.value || "CARREGADO";
+    const margem = Number.parseFloat(document.getElementById("inpMargem")?.value) || 0.15;
+
+    const litros = capacidade * nivel;
+    const consumo = CONSUMOS[carga] ?? CONSUMOS.CARREGADO;
+    const autonomia = litros * consumo;
+    const autonomiaSegura = autonomia * (1 - margem);
+
+    if (distanciaKm <= autonomiaSegura) {
+        return {
+            classe: "status-success",
+            texto: "🟢 CONSEGUE CHEGAR COM MARGEM",
+            margemKm: autonomiaSegura - distanciaKm
+        };
+    }
+
+    if (distanciaKm <= autonomia) {
+        return {
+            classe: "status-warning",
+            texto: "🟡 CHEGA, MAS FORA DA MARGEM DE SEGURANÇA",
+            margemKm: autonomia - distanciaKm
+        };
+    }
+
+    return {
+        classe: "status-danger",
+        texto: "🔴 AUTONOMIA INSUFICIENTE",
+        margemKm: distanciaKm - autonomia
+    };
+}
+
+function exibirResultadosPostos(listaPostos, local) {
+    const container = document.getElementById("resultadosPostos");
+    if (!container) return;
+
+    container.style.display = "block";
+
+    if (!listaPostos.length) {
+        container.innerHTML = `<h3 style="color:#ef4444">❌ Nenhum posto com coordenadas válidas.</h3>`;
+        return;
+    }
+
+    let html = `
+        <h3 style="color:#38bdf8;margin-bottom:6px;">🚚 5 Postos Mais Próximos</h3>
+        <div style="color:#94a3b8;font-size:11px;margin-bottom:15px;">
+            A distância abaixo é por rota quando o roteador está disponível.
+            Caso contrário, aparece como estimativa.
+        </div>
+        <ul style="list-style:none;padding:0;margin:0;">
+    `;
+
+    listaPostos.forEach((p, indice) => {
+        const analise = analisarAutonomia(p.distancia);
+
+        const mapsUrl =
+            `https://www.google.com/maps/dir/?api=1` +
+            `&origin=${encodeURIComponent(`${local.lat},${local.lon}`)}` +
+            `&destination=${encodeURIComponent(`${p.lat},${p.lon}`)}` +
+            `&travelmode=driving`;
+
+        const tipo =
+            p.tipoDistancia === "ROTA"
+                ? "🛣️ rota rodoviária"
+                : "📏 estimativa";
+
+        html += `
+        <li style="
+            background:#0e0f16;
+            border:1px solid #272838;
+            margin-bottom:10px;
+            padding:12px 15px;
+            border-radius:8px;
+            border-left:4px solid ${indice === 0 ? "#22c55e" : "#a855f7"};
+        ">
+            <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">
+                <div>
+                    <strong style="color:#fff;font-size:14px;">
+                        ${indice + 1}º — ${escaparHTML(p.Nome)}
+                    </strong>
+                    <br>
+                    <small style="color:#94a3b8;font-size:11px;">
+                        ${escaparHTML(p.Endereço)} - ${escaparHTML(p.Cidade)}/${escaparHTML(p.Estado)}
+                    </small>
+                </div>
+
+                <span style="
+                    background:#1e1b4b;
+                    color:#c084fc;
+                    border:1px solid #4c1d95;
+                    padding:5px 10px;
+                    border-radius:6px;
+                    font-size:12px;
+                    font-weight:bold;
+                    white-space:nowrap;">
+                    ~${p.distancia.toFixed(1)} km
+                </span>
+            </div>
+
+            <div style="margin-top:8px;font-size:11px;color:#94a3b8;">
+                ${tipo}
+                ${p.tempoMin ? ` • ⏱️ ${formatarTempo(p.tempoMin)}` : ""}
+            </div>
+
+            <div style="
+                margin-top:8px;
+                padding:8px;
+                border-radius:6px;
+                font-size:11px;
+                border:1px solid currentColor;"
+                class="${analise.classe}">
+                ${analise.texto}
+                ${analise.classe === "status-success"
+                    ? ` • margem segura: ${analise.margemKm.toFixed(0)} km`
+                    : analise.classe === "status-warning"
+                        ? ` • margem até autonomia: ${analise.margemKm.toFixed(0)} km`
+                        : ` • faltariam aproximadamente: ${analise.margemKm.toFixed(0)} km`}
+            </div>
+
+            <div style="margin-top:8px;">
+                <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
+                   style="color:#38bdf8;font-size:12px;text-decoration:none;">
+                    🗺️ Abrir rota no Google Maps
+                </a>
+            </div>
+        </li>`;
+    });
+
+    html += "</ul>";
+    container.innerHTML = html;
+}
+
+function validarCadastroPostos() {
+    const problemas = [];
+    const nomes = new Set();
+
+    postos.forEach((p, i) => {
+        if (!Number.isFinite(p.lat) || !Number.isFinite(p.lon)) {
+            problemas.push(`Posto ${i + 1}: coordenada inválida.`);
+        }
+
+        if (p.lat < -35 || p.lat > 6 || p.lon < -75 || p.lon > -30) {
+            problemas.push(`${p.Nome}: coordenada fora do intervalo esperado para Brasil.`);
+        }
+
+        const chave = normalizarTexto(p.Nome);
+        if (nomes.has(chave)) problemas.push(`${p.Nome}: nome duplicado.`);
+        nomes.add(chave);
+    });
+
+    if (problemas.length) {
+        console.warn("Problemas no cadastro de postos:", problemas);
+    }
+}
+</script>
+</body>
+</html>
+'''
+
+path = Path("/mnt/data/dashboard_src-rota-e-combustivel.html")
+path.write_text(html, encoding="utf-8")
+print(f"Arquivo criado: {path}")
+print(f"Tamanho: {path.stat().st_size:,} bytes")

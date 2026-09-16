@@ -1,0 +1,981 @@
+{
+  "dataConferencia": "2026-09-12",
+  "criterio": "Identificação por CNPJ e endereço. Coordenadas publicadas na ANP ou em mapa de credenciados; não constituem conferência física da entrada do posto. As posições da ANP consultadas estão marcadas pela fonte como não validadas.",
+  "postos": [
+    {
+      "nomeCadastro": "Caxuxa I",
+      "status": "revisado",
+      "cnpj": "19848233000177",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000177",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 262,  S/N",
+        "complemento": "KM 523",
+        "municipio": "LUZ"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.783915",
+        "longitude": "-45.657545",
+        "src": "SIRGAS2000",
+        "dataObtencao": "05/03/2019",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "3"
+      },
+      "antes": {
+        "nomeMapa": "Posto Caxuxa Luz",
+        "Endereço": "BR-262, km 523",
+        "lat": -19.7997,
+        "lon": -45.6856
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Luz",
+        "cnpj": "19848233000177",
+        "lat": -19.783915,
+        "lon": -45.657545
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa III (Dorjó)",
+      "status": "revisado",
+      "cnpj": "19848233000258",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000258",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 262,  S/N",
+        "complemento": "KM: 526;",
+        "municipio": "LUZ"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.78374771",
+        "longitude": "-45.68611741",
+        "src": "SIRGAS2000",
+        "dataObtencao": "01/07/2025",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-262, km 526",
+        "lat": -19.8015,
+        "lon": -45.689
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Dorjó",
+        "cnpj": "19848233000258",
+        "lat": -19.78374771,
+        "lon": -45.68611741
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Rodão",
+      "status": "revisado",
+      "cnpj": "19848233001300",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001300",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 262,  SN",
+        "complemento": "KM    481.8",
+        "municipio": "BOM DESPACHO"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.78314019",
+        "longitude": "-45.27031163",
+        "src": "SIRGAS2000",
+        "dataObtencao": "13/05/2024",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-262, km 482",
+        "lat": -19.7358,
+        "lon": -45.2519
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Rodão",
+        "cnpj": "19848233001300",
+        "lat": -19.78314019,
+        "lon": -45.27031163
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Lombada",
+      "status": "revisado",
+      "cnpj": "19848233000843",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000843",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 262 KM 478,50,  SN",
+        "complemento": "",
+        "municipio": "BOM DESPACHO"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.7855515",
+        "longitude": "-45.2361622",
+        "src": "SIRGAS2000",
+        "dataObtencao": "02/12/2021",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-262, km 478,5",
+        "lat": -19.731,
+        "lon": -45.249
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Lombada",
+        "cnpj": "19848233000843",
+        "lat": -19.7855515,
+        "lon": -45.2361622
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa São João",
+      "status": "revisado",
+      "cnpj": "25256074000114",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=25256074000114",
+        "https://www.redecaxuxa.com.br/onde-estamos.php"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "AUTO POSTO CIDADE & CIA LTDA",
+        "endereco": "AVENIDA LIMA GUIMARAES,  80",
+        "complemento": "",
+        "municipio": "PITANGUI"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.6843813",
+        "longitude": "-44.89224451",
+        "src": "SIRGAS2000",
+        "dataObtencao": "04/08/2023",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Av. Lima Guimarães, 80",
+        "lat": -19.6732,
+        "lon": -44.8988
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa São João",
+        "cnpj": "25256074000114",
+        "lat": -19.6843813,
+        "lon": -44.89224451
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Biquinhas",
+      "status": "revisado",
+      "cnpj": "19848233001653",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001653",
+        "https://www.redecaxuxa.com.br/onde-estamos.php"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RUA PREFEITO AIRTON XAVIER DE OLIVEIRA,  432",
+        "complemento": "",
+        "municipio": "BIQUINHAS"
+      },
+      "posicaoFonte": {
+        "latitude": "-18.7815988",
+        "longitude": "-45.5011658",
+        "src": "SIRGAS2000",
+        "dataObtencao": "05/02/2024",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Rua Pref. Airton Xavier, 432",
+        "lat": -19.0118,
+        "lon": -45.7483
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Biquinhas",
+        "cnpj": "19848233001653",
+        "lat": -18.7815988,
+        "lon": -45.5011658,
+        "Endereço": "Rua Prefeito Airton Xavier de Oliveira, 432"
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Barril",
+      "status": "revisado",
+      "cnpj": "29710352000112",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=29710352000112",
+        "https://www.redecaxuxa.com.br/onde-estamos.php"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO CAXUXA BARRIL LTDA",
+        "endereco": "RODOVIA BR 262,  SN",
+        "complemento": "KM    511",
+        "municipio": "LUZ"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.7829019",
+        "longitude": "-45.564868",
+        "src": "SIRGAS2000",
+        "dataObtencao": "14/04/2023",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-262, km 511",
+        "lat": -19.795,
+        "lon": -45.68
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Barril",
+        "cnpj": "29710352000112",
+        "lat": -19.7829019,
+        "lon": -45.564868
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Milênio",
+      "status": "revisado",
+      "cnpj": "19848233000924",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000924",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "AVENIDA LAURA DE ANDRADE,  190",
+        "complemento": "",
+        "municipio": "ARCOS"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.2897088",
+        "longitude": "-45.54804526",
+        "src": "SIRGAS2000",
+        "dataObtencao": "08/05/2023",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Av. Laura Andrade, 190",
+        "lat": -20.2792,
+        "lon": -45.5392
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Milênio",
+        "cnpj": "19848233000924",
+        "lat": -20.2897088,
+        "lon": -45.54804526,
+        "Endereço": "Avenida Laura de Andrade, 190"
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Lava-Pés",
+      "status": "revisado",
+      "cnpj": "19848233001068",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001068",
+        "https://www.redecaxuxa.com.br/onde-estamos.php"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RUA ALZIRA TORRES,  547",
+        "complemento": "",
+        "municipio": "BAMBUI"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.0174465",
+        "longitude": "-45.984369",
+        "src": "SIRGAS2000",
+        "dataObtencao": "11/04/2023",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Rua Alzira Torres, 547",
+        "lat": -20.0071,
+        "lon": -45.9772
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Lava Pés",
+        "cnpj": "19848233001068",
+        "lat": -20.0174465,
+        "lon": -45.984369
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Girassol",
+      "status": "revisado",
+      "cnpj": "19848233001149",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001149",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RUA INDALECIO ALVARES GONZALES,  1755",
+        "complemento": "",
+        "municipio": "BAMBUI"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.0127467",
+        "longitude": "-45.9505037",
+        "src": "SIRGAS2000",
+        "dataObtencao": "21/12/2022",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Rua Indalécio Alvares Gonzales, 1755",
+        "lat": -20.015,
+        "lon": -45.98
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Girassol",
+        "cnpj": "19848233001149",
+        "lat": -20.0127467,
+        "lon": -45.9505037
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Juá",
+      "status": "revisado",
+      "cnpj": "19848233000339",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000339",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 354,  SN",
+        "complemento": "KM    471",
+        "municipio": "ARCOS"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.2723772",
+        "longitude": "-45.57558267",
+        "src": "SIRGAS2000",
+        "dataObtencao": "13/06/2023",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-354, km 471",
+        "lat": -20.285,
+        "lon": -45.545
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Juá",
+        "cnpj": "19848233000339",
+        "lat": -20.2723772,
+        "lon": -45.57558267
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Veredas",
+      "status": "revisado",
+      "cnpj": "19848233000681",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000681",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 365,  SN",
+        "complemento": "KM    323",
+        "municipio": "JOAO PINHEIRO"
+      },
+      "posicaoFonte": {
+        "latitude": "-18.275717092607543",
+        "longitude": "-45.89504126262138",
+        "origemInformacao": "Mapa de credenciados LogPay",
+        "dataObtencao": "2026-01-07T11:25:22.000000Z"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-365, km 323",
+        "lat": -17.745,
+        "lon": -46.175
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Veredas",
+        "cnpj": "19848233000681",
+        "lat": -18.27571709,
+        "lon": -45.89504126
+      },
+      "observacao": "ANP sem coordenadas; usado mapa de credenciados com o mesmo CNPJ."
+    },
+    {
+      "nomeCadastro": "Caxuxa JK",
+      "status": "revisado",
+      "cnpj": "19848233000762",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000762",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 040,  226",
+        "complemento": "KM    225.9",
+        "municipio": "SAO GONCALO DO ABAETE"
+      },
+      "posicaoFonte": {
+        "latitude": "-17.9914226",
+        "longitude": "-45.6015846",
+        "src": "SIRGAS2000",
+        "dataObtencao": "27/01/2026",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-040, km 226",
+        "lat": -18.335,
+        "lon": -45.825
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa JK",
+        "cnpj": "19848233000762",
+        "lat": -17.9914226,
+        "lon": -45.6015846
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Monte Líbano",
+      "status": "revisado",
+      "cnpj": "19848233000509",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233000509",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 262,  SN",
+        "complemento": "KM    526",
+        "municipio": "LUZ"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.782002044769584",
+        "longitude": "-45.67750458400193",
+        "origemInformacao": "Mapa de credenciados LogPay",
+        "dataObtencao": "2026-01-07T11:29:33.000000Z"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-262, km 526",
+        "lat": -19.805,
+        "lon": -45.695
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Monte Líbano",
+        "cnpj": "19848233000509",
+        "lat": -19.78200204,
+        "lon": -45.67750458
+      },
+      "observacao": "ANP sem coordenadas; usado mapa de credenciados com o mesmo CNPJ."
+    },
+    {
+      "nomeCadastro": "Caxuxa Lagoense",
+      "status": "revisado",
+      "cnpj": "19848233001220",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001220",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA MG-170,  SN",
+        "complemento": "KM    28",
+        "municipio": "LAGOA DA PRATA"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.02488215",
+        "longitude": "-45.51527491",
+        "src": "SIRGAS2000",
+        "dataObtencao": "17/07/2025",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "MG-170, km 28",
+        "lat": -20.025,
+        "lon": -45.545
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Lagoense",
+        "cnpj": "19848233001220",
+        "lat": -20.02488215,
+        "lon": -45.51527491
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Moinho 1",
+      "status": "revisado",
+      "cnpj": "19848233001491",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001491",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA FERNAO DIAS,  SN",
+        "complemento": "KM    802 SUL",
+        "municipio": "SAO GONCALO DO SAPUCAI"
+      },
+      "posicaoFonte": {
+        "latitude": "-21.94480285",
+        "longitude": "-45.6213245",
+        "src": "SIRGAS2000",
+        "dataObtencao": "18/11/2024",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-381, km 802 (Sul)",
+        "lat": -21.895,
+        "lon": -45.595
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Moinho I",
+        "cnpj": "19848233001491",
+        "lat": -21.94480285,
+        "lon": -45.6213245
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Moinho 2",
+      "status": "revisado",
+      "cnpj": "19848233001572",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001572",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA FERNAO DIAS,  SN",
+        "complemento": "KM    802 NORTE",
+        "municipio": "SAO GONCALO DO SAPUCAI"
+      },
+      "posicaoFonte": {
+        "latitude": "-21.9458708",
+        "longitude": "-45.619304",
+        "src": "SIRGAS2000",
+        "dataObtencao": "18/11/2024",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-381, km 802 (Norte)",
+        "lat": -21.896,
+        "lon": -45.594
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Moinho II",
+        "cnpj": "19848233001572",
+        "lat": -21.9458708,
+        "lon": -45.619304
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Curvelo",
+      "status": "revisado",
+      "cnpj": "19848233001734",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001734",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR-135,  SN",
+        "complemento": "KM    615",
+        "municipio": "CURVELO"
+      },
+      "posicaoFonte": {
+        "latitude": "-18.7086677",
+        "longitude": "-44.442745",
+        "src": "SIRGAS2000",
+        "dataObtencao": "14/10/2025",
+        "origemInformacao": "Agente de fiscalização da ANP",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": "4"
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-135, km 615",
+        "lat": -18.755,
+        "lon": -44.455
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Curvelo",
+        "cnpj": "19848233001734",
+        "lat": -18.7086677,
+        "lon": -44.442745
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Natal",
+      "status": "revisado",
+      "cnpj": "19848233001815",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001815",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RODOVIA BR 262,  SN",
+        "complemento": "KM    497",
+        "municipio": "MOEMA"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.78523793",
+        "longitude": "-45.4152354",
+        "src": "SIRGAS2000",
+        "dataObtencao": "10/09/2024",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-262, km 497",
+        "lat": -19.825,
+        "lon": -45.405
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Natal",
+        "cnpj": "19848233001815",
+        "lat": -19.78523793,
+        "lon": -45.4152354
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Profetas",
+      "status": "revisado",
+      "cnpj": "57679062000199",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=57679062000199",
+        "https://www.redecaxuxa.com.br/onde-estamos.php",
+        "https://logpay.digital/credenciados/mapa"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO CAXUXA PROFETAS LTDA",
+        "endereco": "RODOVIA BR-040,  SN",
+        "complemento": "KM    614.6",
+        "municipio": "CONGONHAS"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.53360526",
+        "longitude": "-43.823614",
+        "src": "SIRGAS2000",
+        "dataObtencao": "14/07/2025",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "BR-040, km 614,6",
+        "lat": -20.505,
+        "lon": -43.855
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Profetas",
+        "cnpj": "57679062000199",
+        "lat": -20.53360526,
+        "lon": -43.823614
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa Estrela",
+      "status": "revisado",
+      "cnpj": "19848233001904",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233001904",
+        "https://cnpjbrasil.inf.br/19848233001904"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "AVENIDA FRANCISCO CAMPOS,  5",
+        "complemento": "",
+        "municipio": "ESTRELA DO INDAIA"
+      },
+      "posicaoFonte": {
+        "latitude": "-19.52199972",
+        "longitude": "-45.78768171",
+        "src": "SIRGAS2000",
+        "dataObtencao": "18/02/2026",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Av. Francisco Campos, 5",
+        "lat": -19.525,
+        "lon": -45.705
+      },
+      "depois": {
+        "nomeMapa": "Posto Caxuxa Estrela",
+        "cnpj": "19848233001904",
+        "lat": -19.52199972,
+        "lon": -45.78768171
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "Caxuxa 2000",
+      "status": "revisado",
+      "cnpj": "19848233002110",
+      "fontes": [
+        "https://revendedoresapi.anp.gov.br/v1/combustivel?cnpj=19848233002110",
+        "https://socorroauto.com.br/local/japaraiba-mg/posto-combustivel/posto-2000"
+      ],
+      "identificacaoANP": {
+        "razaoSocial": "POSTO SANTA EDWIGES PETROLEO LTDA",
+        "endereco": "RUA PARALELA,  SN",
+        "complemento": "",
+        "municipio": "JAPARAIBA"
+      },
+      "posicaoFonte": {
+        "latitude": "-20.14012164",
+        "longitude": "-45.51258148",
+        "src": "SIRGAS2000",
+        "dataObtencao": "08/09/2026",
+        "origemInformacao": "Preposto da empresa",
+        "validacao": "Posição Geográfica não validada",
+        "estimativaAcuracia": ""
+      },
+      "antes": {
+        "nomeMapa": null,
+        "Endereço": "Rua Paralela, s/n",
+        "lat": -19.805,
+        "lon": -45.505
+      },
+      "depois": {
+        "nomeMapa": "Posto 2000",
+        "cnpj": "19848233002110",
+        "lat": -20.14012164,
+        "lon": -45.51258148
+      },
+      "observacao": "Coordenadas publicadas pela ANP; identificação cruzada com nome/endereço."
+    },
+    {
+      "nomeCadastro": "POSTO 100 TEOFILO OTONI",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 601 BARBACENA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 603 UBÁ",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 605 JANUARIA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 606 UBERABA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 607 UBERLANDIA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 609 CORINTO",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 612 SETE LAGOAS",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 616 MONTES CLAROS",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 617 J F - SÃO MATEUS",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 618 J F - MARIANO PR",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 619 JANAUBA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 620 IPATINGA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 621 PADRE EUSTAQUIO",
+      "status": "revisado_anteriormente",
+      "fontes": [
+        "https://www.waze.com/live-map/directions/br/mg/posto-bretas-duarte?to=place.ChIJvbcEgueWpgARoflajMe--SU"
+      ],
+      "observacao": "Correção anterior confirmada pelo usuário. Preservada nesta conferência: os pontos da ANP para este CNPJ e o da Rua Úrsula Paulino aparentam estar trocados."
+    },
+    {
+      "nomeCadastro": "POSTO 622 CORONEL FABRICIANO",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO 623 CINQUENTENARIO",
+      "status": "revisado",
+      "fontes": [
+        "https://www.google.com/maps/search/?api=1&query=Posto%20Shell%2C%20Rua%20%C3%9Arsula%20Paulino%2C%20763%2C%20Belo%20Horizonte%2C%20MG%2C%20Brasil"
+      ],
+      "depois": {
+        "nomeMapa": "Posto Shell",
+        "Endereço": "Rua Úrsula Paulino, 763",
+        "Cidade": "Belo Horizonte",
+        "Estado": "MG",
+        "lat": -19.9550962,
+        "lon": -43.9840226
+      },
+      "observacao": "O Google Maps identifica o estabelecimento como Posto Shell no endereço informado. Coordenadas extraídas da ficha do local em 12/09/2026."
+    },
+    {
+      "nomeCadastro": "POSTO 624 TAIOBEIRAS",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "Posto Dharma",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "Posto Contorno",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "Posto São Thomé VI",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "Posto Pereira e Maciel",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO REDE BRASIL",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO SAO JOAO DEL REI",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO SERRA",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "POSTO SJDR II/SHARK",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "Posto Dom Pedro Betim",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    },
+    {
+      "nomeCadastro": "Posto Dom Pedro Contagem Fernão Dias",
+      "status": "pendente",
+      "observacao": "Conferência em andamento."
+    }
+  ]
+}
